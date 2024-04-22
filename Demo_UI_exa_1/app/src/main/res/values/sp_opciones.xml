@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="sp_opcion">
+        <item>comida</item>
+        <item>El bacalao</item>
+        <item>El bacalao dorado</item>
+        <item>La Tortilla portuguesa</item>
+        <item>Las Empanadas</item>
+        <item>El Pastel de carne</item>
+
+    </string-array>
+</resources>
