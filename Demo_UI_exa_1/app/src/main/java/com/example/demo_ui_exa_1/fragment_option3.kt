@@ -12,6 +12,7 @@ import android.widget.Toast
 
 
 class FragmentOption3 : Fragment() {
+    private lateinit var buttonShowValue: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -20,22 +21,16 @@ class FragmentOption3 : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_option3, container, false)
 
-        val checkBox = view.findViewById<CheckBox>(R.id.checkBox)
-        val button = view.findViewById<Button>(R.id.button)
+        buttonShowValue = view.findViewById(R.id.buttonShowValue)
 
-        // Configurar evento clic del botón
-        button.setOnClickListener {
-            // Verificar si el CheckBox está marcado
-            val message = if (checkBox.isChecked) {
-                "El CheckBox está marcado"
-            } else {
-                "El CheckBox no está marcado"
-            }
-            // Mostrar el mensaje
-            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+        buttonShowValue.setOnClickListener {
+            comidaFavoritaCristiano()
+
         }
 
         return view
     }
+
+    private
 
 }
