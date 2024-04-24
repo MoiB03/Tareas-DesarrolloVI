@@ -17,7 +17,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="23dp"
         android:layout_marginBottom="17dp"
-        android:text="Cual es la comida favorita de Cristiano Ronaldo?"
+        android:text="¿Cual es la comida favorita de Cristiano Ronaldo?"
         android:textColor="#000000"
         app:layout_constraintBottom_toTopOf="@+id/spSeleccion"
         app:layout_constraintEnd_toEndOf="parent"

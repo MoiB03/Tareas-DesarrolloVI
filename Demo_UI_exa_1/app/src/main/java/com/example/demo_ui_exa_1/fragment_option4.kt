@@ -1,13 +1,14 @@
 package com.example.demo_ui_exa_1
 
+import android.app.AlertDialog
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.WebView
-import android.webkit.WebViewClient
-
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.ListView
+import androidx.fragment.app.Fragment
 
 class FragmentOption4 : Fragment() {
 
@@ -18,23 +19,39 @@ class FragmentOption4 : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_option4, container, false)
 
-        val webView: WebView = view.findViewById(R.id.webView)
+        val listView = view.findViewById<ListView>(R.id.listViewCristiano)
 
-        // Habilitar JavaScript (opcional)
-        webView.settings.javaScriptEnabled = true
+        val items = listOf(
+            "Balón de Oro",
+            "Champions League",
+            "Premier League"
+        )
 
-        // Cargar una página web
-        webView.loadUrl("https://fisc.utp.ac.pa/")
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, items)
+        listView.adapter = adapter
 
-        // Configurar un WebViewClient para que las nuevas URL se carguen en el WebView
-        webView.webViewClient = object : WebViewClient() {
-            override fun shouldOverrideUrlLoading(view: WebView?, url: String?): Boolean {
-                view?.loadUrl(url.toString())
-                return true
+        listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
+            val selectedItem = items[position]
+            val numberOfTitles = getNumberOfTitles(selectedItem)
+
+            val alertDialogBuilder = AlertDialog.Builder(requireContext())
+            alertDialogBuilder.setTitle("Logros de Cristiano")
+            alertDialogBuilder.setMessage("Número de títulos de $selectedItem: $numberOfTitles")
+            alertDialogBuilder.setPositiveButton("Aceptar") { dialog, _ ->
+                dialog.dismiss()
             }
+            alertDialogBuilder.show()
         }
 
         return view
     }
 
+    private fun getNumberOfTitles(title: String): Int {
+        return when (title) {
+            "Balón de Oro" -> 5
+            "Champions League" -> 4
+            "Premier League" -> 3
+            else -> 0
+        }
+    }
 }
