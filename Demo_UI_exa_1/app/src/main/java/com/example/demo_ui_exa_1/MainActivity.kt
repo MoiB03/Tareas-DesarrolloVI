@@ -1,3 +1,10 @@
+/**
+ * Moisés Betancourt 20-70-7371
+ * Fernando Barrios 8-1002-1207
+ */
+
+
+
 package com.example.demo_ui_exa_1
 
 import androidx.appcompat.app.AppCompatActivity
