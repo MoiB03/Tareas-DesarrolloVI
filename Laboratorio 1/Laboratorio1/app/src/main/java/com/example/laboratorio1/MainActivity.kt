@@ -1,6 +1,9 @@
 package com.example.laboratorio1
 
 import android.os.Bundle
+import android.view.View
+import android.widget.Button
+import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -18,9 +21,20 @@ class MainActivity : AppCompatActivity() {
 
         val dadoFragmento = DadoFragmento()
 
-        supportFragmentManager.beginTransaction()
-            .add(R.id.fragment_container, dadoFragmento)//Agregar el Fragmento al contenedor
-            .commit()
+        val btninicio = findViewById<Button>(R.id.btnIrAJugar)
+        val imgDado = findViewById<ImageView>(R.id.dado_feliz)
+
+        btninicio.setOnClickListener {
+            btninicio.visibility = View.GONE
+            imgDado.visibility = View.GONE
+
+            supportFragmentManager.beginTransaction()
+                .add(R.id.fragment_container, dadoFragmento)//Agregar el Fragmento al contenedor
+                .commit()
+        }
+
+
+
 
     }
 }

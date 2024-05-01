@@ -5,42 +5,42 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="?attr/actionBarSize"
-    android:background="#E6E7E8"
+    android:background="#FFFFFF"
     tools:context=".DadoFragmento">
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
         android:text="¡Lanza el dado! ¡Si sale 6 has ganado el juego!"
         android:textSize="18sp"
-        android:layout_marginTop="50dp"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/dado"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="120dp"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        android:src="@drawable/dado3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:src="@drawable/dado3" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <Button
         android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="164dp"
+        android:layout_height="84dp"
+        android:layout_marginBottom="120dp"
         android:text="Lanzar Dado"
-        tools:layout_editor_absoluteX="141dp"
-        tools:layout_editor_absoluteY="555dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="120dp"/>
+        tools:layout_editor_absoluteX="141dp"
+        tools:layout_editor_absoluteY="555dp" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
