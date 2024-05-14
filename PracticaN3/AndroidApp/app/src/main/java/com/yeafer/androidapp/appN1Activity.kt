@@ -1,5 +1,6 @@
 package com.yeafer.androidapp
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -56,6 +57,7 @@ class appN1Activity : AppCompatActivity() {
             if (rbR.isChecked) {
                 botones.RankineButtonClick(numeroEditText, resultaditoTextView, applicationContext)
             }
+
 
         }
 
