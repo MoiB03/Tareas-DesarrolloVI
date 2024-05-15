@@ -5,6 +5,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import org.w3c.dom.Text
 
 class BDHelper (context: Context) :
     SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
@@ -21,10 +22,11 @@ class BDHelper (context: Context) :
     }
 
     //Insertar datos en la db
-    fun addConversionResult(result: Double) {
+    fun addConversionResult(result: Double, numero: String?) {
         val db = this.writableDatabase
         val values = ContentValues()
         values.put(COLUMN_RESULT, result)
+        values.put(COLUMN_NUMERO, numero)
         db.insert(TABLE_NAME, null, values)
         db.close()
     }
@@ -61,9 +63,10 @@ class BDHelper (context: Context) :
 
     companion object {
         private const val DATABASE_VERSION = 1
-        private const val DATABASE_NAME = "conversiones.db"
+        private const val DATABASE_NAME = "Tarea3.db"
         private const val TABLE_NAME = "conversion_temperatura"
         private const val COLUMN_ID = "id"
         private const val COLUMN_RESULT = "resultado"
+        private const val COLUMN_NUMERO = "numero"
     }
 }

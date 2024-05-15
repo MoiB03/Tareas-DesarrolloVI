@@ -23,9 +23,6 @@ class appN1Activity : AppCompatActivity() {
         //la entrada de los datos
         val numeroEditText = findViewById<EditText>(R.id.numero)
 
-        //boton para mostrar el resultado
-        val resultaditoTextView = findViewById<TextView>(R.id.resultadito)
-
         //boton para mandar el resultado
         val btnResult = findViewById<Button>(R.id.btnResultado)
 
@@ -49,29 +46,17 @@ class appN1Activity : AppCompatActivity() {
 
         btnResult.setOnClickListener {
             if (rbF.isChecked) {
-                botones.FahrenheitButtonClick(numeroEditText, resultaditoTextView, applicationContext)
+                botones.FahrenheitButtonClick(numeroEditText, applicationContext)
             }
             if (rbK.isChecked) {
-                botones.KelvinButtonClick(numeroEditText, resultaditoTextView, applicationContext)
+                botones.KelvinButtonClick(numeroEditText, applicationContext)
             }
             if (rbR.isChecked) {
-                botones.RankineButtonClick(numeroEditText, resultaditoTextView, applicationContext)
+                botones.RankineButtonClick(numeroEditText, applicationContext)
             }
 
 
         }
 
-        // Asignar las funciones de clic a los botones
-        //findViewById<Button>(R.id.btnFarenheit).setOnClickListener {
-          // botones.FahrenheitButtonClick(numeroEditText, resultaditoTextView, applicationContext)
-        //}
-
-        //findViewById<Button>(R.id.btnKelvin).setOnClickListener {
-        //botones.KelvinButtonClick(numeroEditText, resultaditoTextView, applicationContext)
-        // }
-
-    //findViewById<Button>(R.id.btnRankine).setOnClickListener {
-    //botones.RankineButtonClick(numeroEditText, resultaditoTextView, applicationContext)
-    //}
     }
 }

@@ -15,10 +15,10 @@
         android:layout_height="0dp"
         android:layout_marginTop="279dp"
         android:layout_marginBottom="12dp"
-        android:hint="Ingrese sus celcius"
+        android:hint="Ingrese sus celsius"
         app:layout_constraintBottom_toTopOf="@+id/radioGroup"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.075"
+        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.409" />
@@ -36,19 +36,6 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/numero" />
-
-
-    <TextView
-        android:id="@+id/resultadito"
-        android:layout_width="175dp"
-        android:layout_height="50dp"
-        android:background="@color/cardview_shadow_start_color"
-        android:gravity="center"
-        android:text="Respuesta"
-        android:textColor="@color/cardview_shadow_start_color"
-        android:textSize="15sp"
-        app:layout_constraintStart_toEndOf="@+id/numero"
-        app:layout_constraintTop_toTopOf="@+id/numero" />
 
 
     <RadioGroup
@@ -69,7 +56,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="20dp"
-            android:text="F" />
+            android:text="F°" />
 
         <RadioButton
             android:id="@+id/rbK"
@@ -77,7 +64,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="20dp"
 
-            android:text="K" />
+            android:text="K°" />
 
         <RadioButton
             android:id="@+id/rbR"
@@ -85,7 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="20dp"
 
-            android:text="R" />
+            android:text="R°" />
     </RadioGroup>
 
 
