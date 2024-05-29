@@ -9,31 +9,40 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.yeafer.androidapp.BDHelper.BDHelper
-import com.yeafer.androidapp.R
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
-class Fragment1 : Fragment() {
+class Fragment_Resultados : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
+    private lateinit var swipeRefreshLayout : SwipeRefreshLayout
     private val adapter = ResultadosAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_1, container, false)?.apply {
+        return inflater.inflate(R.layout.fragment__resultados, container, false)?.apply {
             recyclerView = findViewById(R.id.recyclerView)
+            swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout)
             recyclerView.layoutManager = LinearLayoutManager(requireContext())
             recyclerView.adapter = adapter
 
-            val dbHelper = BDHelper(requireContext())
+            // Configurar SwipeRefreshLayout
+            swipeRefreshLayout.setOnRefreshListener {
+                val dbHelper = DatabaseHelper(requireContext())
+                val results = dbHelper.getAllResults()
+                adapter.setData(results)
+                swipeRefreshLayout.isRefreshing = false // Finalizar la animación de refrescar
+            }
+
+            val dbHelper = DatabaseHelper(requireContext())
             val results = dbHelper.getAllResults()
             adapter.setData(results)
         }
     }
 }
 
-class ResultadosAdapter(private val resultList: MutableList<Pair<Int, Double>> = mutableListOf()) : RecyclerView.Adapter<ResultadosAdapter.ResultadoViewHolder>() {
+class ResultadosAdapter(private val resultList: MutableList<Triple<String, Int, Double>> = mutableListOf()) : RecyclerView.Adapter<ResultadosAdapter.ResultadoViewHolder>() {
 
     inner class ResultadoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val resultadoTextView: TextView = itemView.findViewById(R.id.resultadoTextView)
@@ -46,15 +55,16 @@ class ResultadosAdapter(private val resultList: MutableList<Pair<Int, Double>> =
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ResultadoViewHolder, position: Int) {
-        val (id, result) = resultList[position]
-        holder.resultadoTextView.text = "Registro: $id, °F: $result"
+        val (conversion, id, result) = resultList[position]
+        holder.resultadoTextView.text = "Registro $id: $conversion $result"
     }
+
 
     override fun getItemCount(): Int {
         return resultList.size
     }
 
-    fun setData(data: List<Pair<Int, Double>>) {
+    fun setData(data: List<Triple<String, Int, Double>>) {
         resultList.clear()
         resultList.addAll(data)
         notifyDataSetChanged()

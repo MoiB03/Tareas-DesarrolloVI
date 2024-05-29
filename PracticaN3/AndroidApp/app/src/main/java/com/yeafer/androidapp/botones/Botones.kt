@@ -8,39 +8,50 @@ import com.yeafer.androidapp.operaciones.Operaciones
 
 class Botones {
 
-    fun FahrenheitButtonClick(numeroEditText: EditText, context: Context) {
+    fun FahrenheitButtonClick(numeroEditText: EditText, context: Context) : Double {
+        val farenheit : Double
         val inputText = numeroEditText.text.toString()
         val operaciones = Operaciones()
         if (inputText.isNotEmpty() && (inputText.toFloatOrNull() != null || inputText.toIntOrNull() != null)) {
             val celcius = inputText.toFloat()
-            val farenheit = operaciones.Fahrenheit(celcius)
-
+            farenheit = operaciones.Fahrenheit(celcius).toDouble()
+            return farenheit
         } else {
             Toast.makeText(context, "Por favor ingrese un número", Toast.LENGTH_SHORT).show()
+            return 1.00
         }
+
     }
 
-    fun KelvinButtonClick(numeroEditText: EditText, context: Context) {
+    fun KelvinButtonClick(numeroEditText: EditText, context: Context): Double {
+        val kelvin : Double
         val inputText = numeroEditText.text.toString()
         val operaciones = Operaciones()
         if (inputText.isNotEmpty() && (inputText.toFloatOrNull() != null || inputText.toIntOrNull() != null)) {
             val celcius = inputText.toFloat()
-            val kelvin = operaciones.Kelvin(celcius)
+            kelvin = operaciones.Kelvin(celcius).toDouble()
+            return kelvin
             //
         } else {
             Toast.makeText(context, "Por favor ingrese un número", Toast.LENGTH_SHORT).show()
+            return 1.00
         }
+
     }
 
-    fun RankineButtonClick(numeroEditText: EditText, context: Context) {
+    fun RankineButtonClick(numeroEditText: EditText, context: Context): Double {
+        val rankine : Double
         val inputText = numeroEditText.text.toString()
         val operaciones = Operaciones()
         if (inputText.isNotEmpty() && (inputText.toFloatOrNull() != null || inputText.toIntOrNull() != null)) {
             val celcius = inputText.toFloat()
-            val rankine = operaciones.Rankine(celcius)
+            rankine = operaciones.Rankine(celcius).toDouble()
+            return rankine
+
             //
         } else {
             Toast.makeText(context, "Por favor ingrese un número", Toast.LENGTH_SHORT).show()
+            return 1.00
         }
     }
 }
