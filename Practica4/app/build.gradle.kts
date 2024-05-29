@@ -47,5 +47,9 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-
+    implementation("org.apache.poi:poi:5.2.3") // Para archivos XLS
+    implementation("org.apache.poi:poi-ooxml:5.2.3") // Para archivos XLSX
+    implementation("org.apache.xmlbeans:xmlbeans:5.1.1") // Necesaria para el soporte de archivos OOXML
+    implementation ("org.apache.commons:commons-collections4:4.4")// Dependencia necesaria para POI
+    implementation ("org.apache.commons:commons-compress:1.21") // Dependencia necesaria para POI
 }
