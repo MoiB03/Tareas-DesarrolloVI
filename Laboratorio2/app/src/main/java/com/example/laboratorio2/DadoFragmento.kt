@@ -100,7 +100,8 @@ class DadoFragmento : Fragment() {
                     else {
                         view?.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.gris_claro))
                         if (puntos < 100) {
-                            tv.text = "¡Te quedan menos de 100 puntos!"
+                            tv.text = "¡Te quedan menos de 100 puntos! Perdiste..."
+                            button.isEnabled = false
                         }
                         else {
                             tv.text = "Pierdes 100 puntos... Sigue intentando"
