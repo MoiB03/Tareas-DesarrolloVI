@@ -3,10 +3,12 @@
 * Fernando Barrios 8-1002-1207
 * */
 
-package com.example.laboratorio1
+package com.example.laboratorio2
 
-import android.content.Intent
+
+
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -28,6 +30,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         val dadoFragmento = DadoFragmento()
+        val bundle = Bundle()
 
         val btninicio = findViewById<Button>(R.id.btnIrAJugar)
         val imgDado = findViewById<ImageView>(R.id.dado_feliz)
@@ -35,23 +38,17 @@ class MainActivity : AppCompatActivity() {
         val password = findViewById<EditText>(R.id.password)
 
         btninicio.setOnClickListener {
-            btninicio.visibility = View.GONE
-            imgDado.visibility = View.GONE
-            toolbar.subtitle = "¡Prueba tu suerte!"
-            usuario.visibility = View.GONE
-            password.visibility = View.GONE
-
-            supportFragmentManager.beginTransaction()
-                .add(R.id.fragment_container, dadoFragmento)//Agregar el Fragmento al contenedor
-                .commit()
+            Log.d("MainActivity", "Botón de inicio clickeado")
 
             if (usuario.text.toString().isEmpty() || password.text.toString().isEmpty()) {
-                Toast.makeText(this, "Por favor, ingrese todos los campos", Toast.LENGTH_SHORT).show()
+                Log.d("MainActivity", "Campos de usuario o contraseña vacíos")
+                Toast.makeText(applicationContext, "Por favor, ingrese todos los campos", Toast.LENGTH_SHORT).show()
+
                 return@setOnClickListener
             }
 
             val usersCollection = FirebaseFirestore.getInstance().collection("usuarios")
-            val query = usersCollection.whereEqualTo("nombre", nombreUsuario)
+            val query = usersCollection.whereEqualTo("username", usuario.text.toString())
 
             query.get().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -60,26 +57,40 @@ class MainActivity : AppCompatActivity() {
                         val userDocument = documents.documents[0]
                         val storedPassword = userDocument.getString("contraseña")
 
-                        // Verificar si la contraseña almacenada coincide con la contraseña ingresada
-                        if (storedPassword == password) {
-                            // La contraseña es correcta, inicio de sesión exitoso
-                            startActivity(Intent(this, GameActivity::class.java))
-                            finish()
+                        if (storedPassword == password.text.toString()) {
+                            Log.d("MainActivity", "Inicio de sesión exitoso")
+                            btninicio.visibility = View.GONE
+                            imgDado.visibility = View.GONE
+                            toolbar.subtitle = "¡Prueba tu suerte!"
+                            usuario.visibility = View.GONE
+                            password.visibility = View.GONE
+
+                            val userID = userDocument.getString("id")// Obtener el ID del usuario
+
+                            val bundle = Bundle()
+                            bundle.putString("ID", userID)
+
+                            val transaction = supportFragmentManager.beginTransaction()
+
+                            val dadoFragmento = DadoFragmento()
+                            dadoFragmento.arguments = bundle
+
+                            transaction.replace(R.id.fragment_container, dadoFragmento)
+                            transaction.commit()
+
                         } else {
-                            // La contraseña es incorrecta
+                            Log.d("MainActivity", "Contraseña incorrecta")
                             Toast.makeText(this, "Contraseña incorrecta", Toast.LENGTH_SHORT).show()
                         }
                     } else {
-                        // No se encontró ningún usuario con ese nombre de usuario
+                        Log.d("MainActivity", "Usuario no encontrado")
                         Toast.makeText(this, "Usuario no encontrado", Toast.LENGTH_SHORT).show()
                     }
                 } else {
-                    // Error al realizar la consulta a Firestore
+                    Log.e("MainActivity", "Error al realizar la consulta a Firestore", task.exception)
                     Toast.makeText(this, "Error: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                 }
             }
-
-
         }
 
     }

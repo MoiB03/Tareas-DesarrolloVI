@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "71050611995",
+    "project_id": "dadoapp-bd",
+    "storage_bucket": "dadoapp-bd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:71050611995:android:2737f9a81c0680d7b217be",
+        "android_client_info": {
+          "package_name": "com.example.laboratorio2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBaBPwpoGATMTpULOgYfYwJZsHtFodLh-U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
