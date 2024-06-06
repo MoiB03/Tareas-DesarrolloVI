@@ -38,21 +38,18 @@ class DadoFragmento : Fragment() {
 
 
         val userId = arguments?.getString("ID") ?: ""
-        val registerCollection = FirebaseFirestore.getInstance().collection("registro_de_puntos")
+        val registerCollection = db.collection("registro_de_puntos")
         val query = registerCollection.whereEqualTo("usuario_id", userId)
 
         Log.d("DadoFragmento", "ID de usuario: $userId")
 
         query.get().addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                Log.d("si", "Entro")
                 val documents = task.result
                 if (documents != null && !documents.isEmpty) {
-                    Log.d("si2", "Entrox2")
                     val userDocument = documents.documents[0]
 
-                    val puntos = userDocument.getString("cantidad_de_puntos")
-                    Log.d("puntos", "puntos: $puntos")
+                    var puntos = userDocument.getLong("cantidad_puntos")
                     Log.d("DadoFragmento", "Puntos actuales del usuario: $puntos")
                     tv2.text = "Puntaje: $puntos"
 
@@ -81,87 +78,101 @@ class DadoFragmento : Fragment() {
 
 
     private fun dadoAleatorio(numeroDado: Int, userId: String) {
-        db.collection("registro_de_puntos").document(userId)
-            .get()
-            .addOnSuccessListener { document ->
-                if (document != null) {
-                    val puntosActuales = document.getLong("cantidad_puntos") ?: 0
+        val registerCollection = db.collection("registro_de_puntos")
+        val query = registerCollection.whereEqualTo("usuario_id", userId)
+
+        Log.d("DadoFragmento", "ID de usuario: $userId")
+
+        query.get().addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val documents = task.result
+                if (documents != null && !documents.isEmpty) {
+                    val userDocument = documents.documents[0]
+                    var puntos = userDocument.getLong("cantidad_puntos") ?: 0
+
+                    Log.d("DadoFragmento", "Puntos actuales del usuario: $puntos")
 
                     if (numeroDado == 6) {
                         view?.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.dorado))
                         tv.text = "¡Ganaste 500 puntos!"
                         sumarPuntos(userId, 500)
-                    } else {
+                    }
+                    else {
                         view?.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.gris_claro))
-                        if (puntosActuales < 100) {
+                        if (puntos < 100) {
                             tv.text = "¡Te quedan menos de 100 puntos!"
-                        } else {
-                            tv.text = "Sigue intentando"
+                        }
+                        else {
+                            tv.text = "Pierdes 100 puntos... Sigue intentando"
                         }
                         restarPuntos(userId, 100)
                     }
-                } else {
-                    Log.d("DadoFragmento", "No se encontró el documento del usuario")
                 }
             }
-            .addOnFailureListener { e ->
-                Log.w("DadoFragmento", "Error al obtener el documento del usuario", e)
-            }
+        }
     }
 
 
     private fun sumarPuntos(userId: String, puntos: Int) {
-        val db = FirebaseFirestore.getInstance()
-        db.collection("registro_de_puntos").document(userId)
-            .get()
-            .addOnSuccessListener { document ->
-                if (document != null) {
-                    val puntosActuales = document.getLong("cantidad_puntos") ?: 0
-                    val nuevosPuntos = puntosActuales + puntos
+        val registerCollection = db.collection("registro_de_puntos")
+        val query = registerCollection.whereEqualTo("usuario_id", userId)
+
+        Log.d("DadoFragmento", "ID de usuario: $userId")
+
+        query.get().addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val documents = task.result
+                if (documents != null && !documents.isEmpty) {
+                    val userDocument = documents.documents[0]
+                    val id_generado = userDocument.id
+
+                    var puntosActuales = userDocument.getLong("cantidad_puntos")
+                    Log.d("DadoFragmento", "Puntos actuales del usuario: $puntosActuales")
+                    var nuevosPuntos = puntosActuales?.plus(puntos)
                     tv2.text = "Puntaje: $nuevosPuntos"
-                    // Actualizar el campo cantidad_puntos en Firestore
-                    db.collection("registro_de_puntos").document(userId)
-                        .update("cantidad_puntos", nuevosPuntos)
-                        .addOnSuccessListener {
-                            Log.d("DadoFragmento", "Se sumaron $puntos puntos al usuario")
-                        }
+                    registerCollection.document(id_generado).update("cantidad_puntos", nuevosPuntos).addOnSuccessListener {
+                        Log.d("DadoFragmento", "Se sumaron $puntos puntos al usuario")
+                    }
                         .addOnFailureListener { e ->
                             Log.w("DadoFragmento", "Error al sumar puntos", e)
                         }
                 } else {
                     Log.d("DadoFragmento", "No se encontró el documento del usuario")
                 }
+
+                }
             }
-            .addOnFailureListener { e ->
-                Log.w("DadoFragmento", "Error al obtener el documento del usuario", e)
-            }
-    }
+        }
 
     private fun restarPuntos(userId: String, puntos: Int) {
-        val db = FirebaseFirestore.getInstance()
-        db.collection("registro_de_puntos").document(userId)
-            .get()
-            .addOnSuccessListener { document ->
-                if (document != null) {
-                    val puntosActuales = document.getLong("cantidad_puntos") ?: 0
-                    val nuevosPuntos = puntosActuales - puntos
+        val registerCollection = db.collection("registro_de_puntos")
+        val query = registerCollection.whereEqualTo("usuario_id", userId)
+
+        Log.d("DadoFragmento", "ID de usuario: $userId")
+
+        query.get().addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val documents = task.result
+                if (documents != null && !documents.isEmpty) {
+                    val userDocument = documents.documents[0]
+                    val id_generado = userDocument.id
+
+                    var puntosActuales = userDocument.getLong("cantidad_puntos")
+                    Log.d("DadoFragmento", "Puntos actuales del usuario: $puntosActuales")
+                    var nuevosPuntos = puntosActuales?.minus(puntos)
                     tv2.text = "Puntaje: $nuevosPuntos"
-                    // Actualizar el campo cantidad_puntos en Firestore
-                    db.collection("registro_de_puntos").document(userId)
-                        .update("cantidad_puntos", nuevosPuntos)
-                        .addOnSuccessListener {
-                            Log.d("DadoFragmento", "Se restaron $puntos puntos al usuario")
-                        }
+                    registerCollection.document(id_generado).update("cantidad_puntos", nuevosPuntos).addOnSuccessListener {
+                        Log.d("DadoFragmento", "Se restaron $puntos puntos al usuario")
+                    }
                         .addOnFailureListener { e ->
                             Log.w("DadoFragmento", "Error al restar puntos", e)
                         }
                 } else {
                     Log.d("DadoFragmento", "No se encontró el documento del usuario")
                 }
+
             }
-            .addOnFailureListener { e ->
-                Log.w("DadoFragmento", "Error al obtener el documento del usuario", e)
-            }
+        }
     }
 
     private fun rotarDado(): Int{

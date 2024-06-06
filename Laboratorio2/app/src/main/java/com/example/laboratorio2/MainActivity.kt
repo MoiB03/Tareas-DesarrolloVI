@@ -1,6 +1,7 @@
 /*
 * Moisés Betancourt 20-70-7371
 * Fernando Barrios 8-1002-1207
+* Nadim García 4-824-817
 * */
 
 package com.example.laboratorio2
